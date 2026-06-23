@@ -1,0 +1,2393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#0ea5e9">
+<!-- skill:chrome -->
+<style>
+/* Credit line — bottom-right */
+.design-ui-credit {
+  position: fixed;
+  bottom: 12px;
+  right: 12px;
+  font: 11px/1 system-ui, sans-serif;
+  color: rgba(128,128,128,0.5);
+  pointer-events: none;
+  z-index: 2147483647;
+  transition: opacity 0.4s ease;
+  user-select: none;
+  letter-spacing: 0.02em;
+}
+
+/* Hide chrome on touch devices */
+@media (hover: none) {
+  .design-ui-credit { display: none; }
+}
+
+/* Print fixes */
+@media print {
+  * {
+    transition: none !important;
+    animation: none !important;
+    box-shadow: none !important;
+  }
+  body {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+  .design-ui-credit { display: none !important; }
+}
+
+</style>
+<script>
+(function () {
+    // Chrome UI (hover devices only): credit badge with idle-fade.
+    // Deferred until body exists since the script may run in <head>.
+    function initChromeUI() {
+        if (!matchMedia('(hover: hover)').matches) return;
+
+        var credit = document.createElement('div');
+        credit.className = 'design-ui-credit';
+        credit.setAttribute('aria-hidden', 'true');
+        credit.innerHTML = '\u{1F49C} by ClickUp Brain';
+        document.body.appendChild(credit);
+
+        var timer = null;
+        var fade = function (out) { credit.style.opacity = out ? '0' : ''; };
+        fade(true);
+        var show = function () {
+            fade(false);
+            clearTimeout(timer);
+            timer = setTimeout(function () { fade(true); }, 3000);
+        };
+        document.addEventListener('mousemove', show);
+        show();
+    }
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initChromeUI);
+    } else {
+        initChromeUI();
+    }
+})();
+
+</script>
+<!-- /skill:chrome -->
+<!-- skill:libraries -->
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.383.0/dist/umd/lucide.min.js" integrity="sha384-wHFvAtjmgnkA2PJcMsDaCgdipf7X7YV44X/igbLHpvGiq6T5/PvFKl93grpvtbQT" crossorigin="anonymous"></script>
+<script>document.addEventListener("DOMContentLoaded",()=>lucide.createIcons())</script>
+<!-- /skill:libraries -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shee Zuri Cleaning Services | Sparkling Spaces, Exceptional Service</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue-900: oklch(25% 0.12 250);
+  --blue-800: oklch(30% 0.14 250);
+  --blue-700: oklch(35% 0.15 250);
+  --blue-600: oklch(40% 0.14 250);
+  --blue-500: oklch(45% 0.13 250);
+  --blue-400: oklch(55% 0.10 250);
+  --blue-100: oklch(92% 0.02 250);
+  --blue-50: oklch(97% 0.01 250);
+  
+  --green-700: oklch(45% 0.16 155);
+  --green-600: oklch(50% 0.17 155);
+  --green-500: oklch(55% 0.18 155);
+  --green-400: oklch(62% 0.16 155);
+  --green-300: oklch(72% 0.12 155);
+  --green-100: oklch(92% 0.04 155);
+  --green-50: oklch(97% 0.02 155);
+  
+  --neutral-900: oklch(15% 0.008 250);
+  --neutral-800: oklch(25% 0.008 250);
+  --neutral-700: oklch(35% 0.006 250);
+  --neutral-600: oklch(45% 0.005 250);
+  --neutral-500: oklch(55% 0.005 250);
+  --neutral-400: oklch(65% 0.004 250);
+  --neutral-300: oklch(78% 0.004 250);
+  --neutral-200: oklch(88% 0.004 250);
+  --neutral-100: oklch(94% 0.004 250);
+  --neutral-50: oklch(98% 0.003 250);
+  --white: oklch(99.5% 0.002 250);
+  
+  --red-500: oklch(55% 0.2 25);
+  --red-100: oklch(92% 0.04 25);
+  --amber-500: oklch(70% 0.16 80);
+  --amber-100: oklch(93% 0.04 80);
+  
+  --font: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+  --space-4xl: 96px;
+  
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+  
+  --shadow-sm: 0 1px 3px oklch(25% 0.02 250 / 0.08);
+  --shadow-md: 0 4px 12px oklch(25% 0.02 250 / 0.1);
+  --shadow-lg: 0 12px 32px oklch(25% 0.02 250 / 0.12);
+  --shadow-xl: 0 20px 48px oklch(25% 0.02 250 / 0.15);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; font-optical-sizing: auto; }
+
+body {
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--neutral-800);
+  background: var(--white);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4 { text-wrap: balance; line-height: 1.2; font-weight: 700; color: var(--neutral-900); }
+h1 { font-size: clamp(2.2rem, 5vw, 3.5rem); }
+h2 { font-size: clamp(1.8rem, 3.5vw, 2.5rem); }
+h3 { font-size: 1.35rem; }
+h4 { font-size: 1.1rem; }
+
+p { text-wrap: pretty; max-width: 68ch; }
+
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+img { max-width: 100%; display: block; }
+input, select, textarea { font-family: inherit; font-size: inherit; }
+
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+
+/* Navigation */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: var(--space-md) var(--space-xl);
+  transition: background 0.3s var(--ease-out-expo), box-shadow 0.3s var(--ease-out-expo);
+}
+
+.nav.scrolled {
+  background: oklch(99.5% 0.002 250 / 0.95);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-sm);
+}
+
+.nav-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-lg);
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-weight: 800;
+  font-size: 1.15rem;
+  color: var(--blue-700);
+}
+
+.nav-logo svg { width: 36px; height: 36px; }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xl);
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--neutral-700);
+  transition: color 0.15s;
+  position: relative;
+}
+
+.nav-links a:hover, .nav-links a.active { color: var(--blue-700); }
+
+.nav-links a.active::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--green-500);
+  border-radius: 1px;
+}
+
+.nav-cta {
+  padding: 10px 20px;
+  background: var(--green-500);
+  color: var(--white);
+  font-weight: 600;
+  font-size: 0.875rem;
+  border-radius: var(--radius-full);
+  transition: transform 0.2s var(--ease-out-expo), background 0.2s;
+}
+
+.nav-cta:hover { background: var(--green-600); transform: translateY(-1px); }
+
+.mobile-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  padding: 8px;
+}
+
+.mobile-toggle span {
+  width: 22px;
+  height: 2px;
+  background: var(--neutral-800);
+  border-radius: 2px;
+  transition: transform 0.3s var(--ease-out-expo);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 14px 28px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: var(--radius-full);
+  transition: transform 0.2s var(--ease-out-expo), box-shadow 0.2s, background 0.2s;
+}
+
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: translateY(0); }
+
+.btn-primary { background: var(--green-500); color: var(--white); box-shadow: 0 4px 16px oklch(55% 0.18 155 / 0.3); }
+.btn-primary:hover { background: var(--green-600); box-shadow: 0 6px 20px oklch(55% 0.18 155 / 0.4); }
+
+.btn-secondary { background: var(--blue-700); color: var(--white); box-shadow: 0 4px 16px oklch(35% 0.15 250 / 0.3); }
+.btn-secondary:hover { background: var(--blue-800); }
+
+.btn-outline { border: 2px solid var(--neutral-300); color: var(--neutral-800); }
+.btn-outline:hover { border-color: var(--green-500); color: var(--green-600); }
+
+.btn-sm { padding: 10px 20px; font-size: 0.85rem; }
+.btn-lg { padding: 18px 36px; font-size: 1.05rem; }
+
+/* Sections */
+.section { padding: var(--space-4xl) var(--space-xl); }
+.section-sm { padding: var(--space-3xl) var(--space-xl); }
+
+.container { max-width: 1200px; margin: 0 auto; }
+.container-sm { max-width: 900px; margin: 0 auto; }
+
+.section-header { text-align: center; margin-bottom: var(--space-3xl); }
+.section-header p { margin: var(--space-md) auto 0; color: var(--neutral-600); font-size: 1.05rem; }
+
+.eyebrow {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--green-500);
+  margin-bottom: var(--space-md);
+}
+
+/* Page System */
+.page { display: none; opacity: 0; transition: opacity 0.4s var(--ease-out-expo); }
+.page.active { display: block; opacity: 1; }
+
+/* Hero */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: var(--space-3xl);
+  padding: 120px var(--space-xl) var(--space-4xl);
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+.hero-content { max-width: 560px; }
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 6px 14px;
+  background: var(--green-50);
+  color: var(--green-700);
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  margin-bottom: var(--space-lg);
+}
+
+.hero-badge i { width: 14px; height: 14px; }
+
+.hero h1 { margin-bottom: var(--space-lg); color: var(--blue-900); }
+.hero h1 span { color: var(--green-500); }
+
+.hero-desc { font-size: 1.1rem; color: var(--neutral-600); margin-bottom: var(--space-xl); }
+
+.hero-actions { display: flex; gap: var(--space-md); flex-wrap: wrap; }
+
+.hero-stats {
+  display: flex;
+  gap: var(--space-2xl);
+  margin-top: var(--space-3xl);
+  padding-top: var(--space-xl);
+  border-top: 1px solid var(--neutral-200);
+}
+
+.hero-stat strong { display: block; font-size: 1.8rem; color: var(--blue-800); }
+.hero-stat span { font-size: 0.85rem; color: var(--neutral-500); }
+
+.hero-visual {
+  position: relative;
+  height: 520px;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+}
+
+.hero-img-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--blue-100) 0%, var(--green-50) 50%, var(--blue-50) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-xl);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-img-placeholder::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cdefs%3E%3Cpattern id='p' width='40' height='40' patternUnits='userSpaceOnUse'%3E%3Ccircle cx='20' cy='20' r='1.5' fill='%230066aa' opacity='0.08'/%3E%3C/pattern%3E%3C/defs%3E%3Crect fill='url(%23p)' width='200' height='200'/%3E%3C/svg%3E");
+}
+
+.hero-img-placeholder i { width: 80px; height: 80px; color: var(--blue-400); opacity: 0.5; position: relative; }
+
+.hero-float-card {
+  position: absolute;
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md) var(--space-lg);
+  box-shadow: var(--shadow-lg);
+  animation: float 6s ease-in-out infinite;
+}
+
+.hero-float-card.top-right { top: 24px; right: 24px; }
+.hero-float-card.bottom-left { bottom: 24px; left: 24px; }
+
+.float-card-label { font-size: 0.75rem; color: var(--neutral-500); margin-bottom: 4px; }
+.float-card-value { font-size: 1.1rem; font-weight: 700; color: var(--blue-800); }
+.float-card-stars { color: var(--amber-500); font-size: 0.9rem; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Services Grid */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-lg);
+}
+
+.service-card {
+  padding: var(--space-xl);
+  background: var(--white);
+  border: 1px solid var(--neutral-200);
+  border-radius: var(--radius-lg);
+  transition: transform 0.3s var(--ease-out-expo), box-shadow 0.3s var(--ease-out-expo), border-color 0.3s;
+}
+
+.service-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--green-300);
+}
+
+.service-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--blue-50);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-md);
+  color: var(--blue-700);
+}
+
+.service-icon i { width: 24px; height: 24px; }
+
+.service-card h3 { font-size: 1.1rem; margin-bottom: var(--space-sm); }
+.service-card p { font-size: 0.9rem; color: var(--neutral-600); line-height: 1.6; }
+.service-card .price { display: block; margin-top: var(--space-md); font-weight: 700; color: var(--green-600); font-size: 1rem; }
+
+/* Testimonials */
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--space-lg);
+}
+
+.testimonial {
+  padding: var(--space-xl);
+  background: var(--neutral-50);
+  border-radius: var(--radius-lg);
+  position: relative;
+}
+
+.testimonial::before {
+  content: '"';
+  position: absolute;
+  top: 16px;
+  left: 24px;
+  font-size: 4rem;
+  font-weight: 800;
+  color: var(--green-300);
+  line-height: 1;
+  opacity: 0.5;
+}
+
+.testimonial-text { font-size: 0.95rem; color: var(--neutral-700); margin-bottom: var(--space-lg); padding-top: var(--space-lg); line-height: 1.7; }
+
+.testimonial-author { display: flex; align-items: center; gap: var(--space-md); }
+.testimonial-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--blue-100);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: var(--blue-700);
+  font-size: 0.9rem;
+}
+.testimonial-info strong { display: block; font-size: 0.9rem; }
+.testimonial-info span { font-size: 0.8rem; color: var(--neutral-500); }
+
+/* Why Choose Us */
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--space-xl);
+}
+
+.why-item { text-align: center; padding: var(--space-lg); }
+.why-item-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto var(--space-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--green-50);
+  border-radius: 50%;
+  color: var(--green-600);
+}
+
+.why-item-icon i { width: 28px; height: 28px; }
+.why-item h4 { margin-bottom: var(--space-sm); }
+.why-item p { font-size: 0.88rem; color: var(--neutral-600); }
+
+/* CTA Banner */
+.cta-banner {
+  background: linear-gradient(135deg, var(--blue-800), var(--blue-700));
+  border-radius: var(--radius-xl);
+  padding: var(--space-3xl);
+  text-align: center;
+  color: var(--white);
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-banner::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 400px;
+  height: 400px;
+  background: oklch(55% 0.18 155 / 0.1);
+  border-radius: 50%;
+}
+
+.cta-banner h2 { color: var(--white); margin-bottom: var(--space-md); }
+.cta-banner p { color: oklch(85% 0.02 250); margin: 0 auto var(--space-xl); }
+
+/* About Page */
+.about-hero {
+  padding: 140px var(--space-xl) var(--space-3xl);
+  background: linear-gradient(180deg, var(--blue-50), var(--white));
+  text-align: center;
+}
+
+.about-hero h1 { color: var(--blue-900); margin-bottom: var(--space-md); }
+.about-hero p { margin: 0 auto; color: var(--neutral-600); font-size: 1.1rem; }
+
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-lg);
+}
+
+.value-card {
+  text-align: center;
+  padding: var(--space-xl) var(--space-lg);
+  background: var(--neutral-50);
+  border-radius: var(--radius-lg);
+}
+
+.value-card i { width: 36px; height: 36px; color: var(--green-500); margin-bottom: var(--space-md); }
+.value-card h4 { margin-bottom: var(--space-sm); font-size: 1rem; }
+.value-card p { font-size: 0.85rem; color: var(--neutral-600); }
+
+.mission-vision {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+}
+
+.mv-card {
+  padding: var(--space-2xl);
+  border-radius: var(--radius-lg);
+}
+
+.mv-card.mission { background: var(--blue-50); }
+.mv-card.vision { background: var(--green-50); }
+.mv-card h3 { margin-bottom: var(--space-md); }
+.mv-card p { font-size: 0.95rem; color: var(--neutral-700); }
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-xl);
+}
+
+.team-member { text-align: center; }
+.team-avatar {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto var(--space-md);
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue-100), var(--green-100));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--blue-700);
+}
+.team-member h4 { margin-bottom: 4px; }
+.team-member span { font-size: 0.85rem; color: var(--neutral-500); }
+
+/* Pricing */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-lg);
+  align-items: start;
+}
+
+.pricing-card {
+  padding: var(--space-2xl);
+  border: 2px solid var(--neutral-200);
+  border-radius: var(--radius-xl);
+  position: relative;
+  transition: transform 0.3s var(--ease-out-expo), box-shadow 0.3s;
+}
+
+.pricing-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+
+.pricing-card.featured {
+  border-color: var(--green-400);
+  background: linear-gradient(180deg, var(--green-50), var(--white));
+}
+
+.pricing-card.featured::before {
+  content: 'Most Popular';
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 4px 16px;
+  background: var(--green-500);
+  color: var(--white);
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: var(--radius-full);
+}
+
+.pricing-card h3 { margin-bottom: var(--space-sm); }
+.pricing-card .price-amount { font-size: 2.2rem; font-weight: 800; color: var(--blue-800); }
+.pricing-card .price-period { font-size: 0.85rem; color: var(--neutral-500); }
+.pricing-card .price-desc { font-size: 0.9rem; color: var(--neutral-600); margin: var(--space-md) 0 var(--space-lg); }
+
+.pricing-features { list-style: none; margin-bottom: var(--space-xl); }
+.pricing-features li {
+  padding: var(--space-sm) 0;
+  font-size: 0.9rem;
+  color: var(--neutral-700);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+.pricing-features li i { width: 18px; height: 18px; color: var(--green-500); flex-shrink: 0; }
+
+/* Gallery */
+.gallery-filters {
+  display: flex;
+  gap: var(--space-sm);
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: var(--space-xl);
+}
+
+.gallery-filter {
+  padding: 8px 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border-radius: var(--radius-full);
+  background: var(--neutral-100);
+  color: var(--neutral-700);
+  transition: background 0.2s, color 0.2s;
+}
+
+.gallery-filter:hover, .gallery-filter.active { background: var(--blue-700); color: var(--white); }
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-md);
+}
+
+.gallery-item {
+  aspect-ratio: 4/3;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+}
+
+.gallery-item-img {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--blue-100), var(--neutral-100));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.4s var(--ease-out-expo);
+}
+
+.gallery-item:hover .gallery-item-img { transform: scale(1.05); }
+
+.gallery-item-overlay {
+  position: absolute;
+  inset: 0;
+  background: oklch(25% 0.12 250 / 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.gallery-item:hover .gallery-item-overlay { opacity: 1; }
+.gallery-item-overlay span { color: var(--white); font-weight: 600; font-size: 0.9rem; }
+
+.gallery-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 4px 10px;
+  background: var(--white);
+  border-radius: var(--radius-full);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--neutral-700);
+}
+
+/* Contact */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3xl);
+}
+
+.contact-info-item {
+  display: flex;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+
+.contact-info-icon {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--blue-50);
+  border-radius: var(--radius-md);
+  color: var(--blue-700);
+}
+
+.contact-info-icon i { width: 20px; height: 20px; }
+.contact-info-item h4 { font-size: 0.95rem; margin-bottom: 2px; }
+.contact-info-item p { font-size: 0.88rem; color: var(--neutral-600); }
+
+.form-group { margin-bottom: var(--space-lg); }
+.form-label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--neutral-700); margin-bottom: var(--space-sm); }
+
+.form-input, .form-select, .form-textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1.5px solid var(--neutral-300);
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  color: var(--neutral-800);
+  background: var(--white);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  outline: none;
+  border-color: var(--green-400);
+  box-shadow: 0 0 0 3px oklch(55% 0.18 155 / 0.1);
+}
+
+.form-textarea { resize: vertical; min-height: 120px; }
+
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md); }
+
+.map-placeholder {
+  width: 100%;
+  height: 250px;
+  background: var(--neutral-100);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: var(--space-xl);
+  color: var(--neutral-500);
+  font-size: 0.9rem;
+}
+
+.whatsapp-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 56px;
+  height: 56px;
+  background: #25D366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px oklch(45% 0.15 155 / 0.3);
+  z-index: 90;
+  transition: transform 0.2s var(--ease-out-expo);
+}
+
+.whatsapp-btn:hover { transform: scale(1.1); }
+.whatsapp-btn svg { width: 28px; height: 28px; fill: white; }
+
+/* Dashboard */
+.dashboard-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+  padding-top: 72px;
+}
+
+.dash-sidebar {
+  background: var(--neutral-50);
+  border-right: 1px solid var(--neutral-200);
+  padding: var(--space-xl) var(--space-md);
+}
+
+.dash-nav { list-style: none; }
+.dash-nav li { margin-bottom: 4px; }
+.dash-nav a {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: 10px 16px;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--neutral-600);
+  transition: background 0.15s, color 0.15s;
+}
+.dash-nav a:hover { background: var(--neutral-200); color: var(--neutral-800); }
+.dash-nav a.active { background: var(--blue-700); color: var(--white); }
+.dash-nav a i { width: 18px; height: 18px; }
+
+.dash-content { padding: var(--space-xl) var(--space-2xl); }
+.dash-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-xl); }
+.dash-header h2 { font-size: 1.5rem; }
+
+.dash-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+
+.dash-stat {
+  padding: var(--space-lg);
+  background: var(--neutral-50);
+  border-radius: var(--radius-lg);
+}
+
+.dash-stat-label { font-size: 0.8rem; color: var(--neutral-500); margin-bottom: var(--space-xs); }
+.dash-stat-value { font-size: 1.5rem; font-weight: 700; color: var(--neutral-900); }
+.dash-stat-change { font-size: 0.8rem; color: var(--green-600); margin-top: 4px; }
+
+/* Tables */
+.table-wrapper { overflow-x: auto; border-radius: var(--radius-lg); border: 1px solid var(--neutral-200); }
+
+table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+th { padding: 12px 16px; text-align: left; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--neutral-500); background: var(--neutral-50); border-bottom: 1px solid var(--neutral-200); }
+td { padding: 12px 16px; border-bottom: 1px solid var(--neutral-100); }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--neutral-50); }
+
+.status-badge {
+  display: inline-flex;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.status-badge.pending { background: var(--amber-100); color: oklch(40% 0.12 80); }
+.status-badge.confirmed { background: var(--green-100); color: var(--green-700); }
+.status-badge.completed { background: var(--blue-100); color: var(--blue-700); }
+.status-badge.cancelled { background: var(--red-100); color: oklch(40% 0.15 25); }
+
+/* Auth */
+.auth-page {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.auth-left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2xl);
+}
+
+.auth-form { width: 100%; max-width: 400px; }
+.auth-form h2 { margin-bottom: var(--space-sm); }
+.auth-form .subtitle { color: var(--neutral-500); font-size: 0.95rem; margin-bottom: var(--space-xl); }
+
+.auth-right {
+  background: linear-gradient(135deg, var(--blue-800), var(--blue-700));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2xl);
+  color: var(--white);
+}
+
+.auth-right-content { max-width: 400px; text-align: center; }
+.auth-right-content h2 { color: var(--white); margin-bottom: var(--space-md); }
+.auth-right-content p { color: oklch(80% 0.02 250); }
+
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin: var(--space-lg) 0;
+  color: var(--neutral-400);
+  font-size: 0.85rem;
+}
+.auth-divider::before, .auth-divider::after { content: ''; flex: 1; height: 1px; background: var(--neutral-200); }
+
+.auth-link { color: var(--green-600); font-weight: 600; cursor: pointer; }
+.auth-link:hover { color: var(--green-700); }
+
+/* Footer */
+.footer {
+  background: var(--blue-900);
+  color: oklch(80% 0.02 250);
+  padding: var(--space-3xl) var(--space-xl) var(--space-xl);
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: var(--space-2xl);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-brand p { font-size: 0.88rem; margin-top: var(--space-md); line-height: 1.7; max-width: 280px; }
+.footer h4 { color: var(--white); font-size: 0.9rem; margin-bottom: var(--space-md); }
+.footer-links { list-style: none; }
+.footer-links li { margin-bottom: var(--space-sm); }
+.footer-links a { font-size: 0.85rem; color: oklch(70% 0.02 250); transition: color 0.15s; }
+.footer-links a:hover { color: var(--green-400); }
+
+.footer-bottom {
+  border-top: 1px solid oklch(30% 0.05 250);
+  margin-top: var(--space-2xl);
+  padding-top: var(--space-lg);
+  text-align: center;
+  font-size: 0.8rem;
+  color: oklch(55% 0.02 250);
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Booking Form */
+.booking-form {
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  padding: var(--space-2xl);
+  box-shadow: var(--shadow-lg);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.booking-steps {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-xl);
+  margin-bottom: var(--space-2xl);
+}
+
+.booking-step {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--neutral-400);
+}
+
+.booking-step.active { color: var(--blue-700); }
+.booking-step-num {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--neutral-200);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+.booking-step.active .booking-step-num { background: var(--blue-700); color: var(--white); }
+
+/* Admin */
+.admin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-lg);
+  flex-wrap: wrap;
+  gap: var(--space-md);
+}
+
+.admin-actions { display: flex; gap: var(--space-sm); }
+
+.tab-nav {
+  display: flex;
+  gap: 4px;
+  margin-bottom: var(--space-xl);
+  border-bottom: 1px solid var(--neutral-200);
+  overflow-x: auto;
+}
+
+.tab-btn {
+  padding: 10px 20px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--neutral-500);
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+  white-space: nowrap;
+}
+.tab-btn:hover { color: var(--neutral-800); }
+.tab-btn.active { color: var(--blue-700); border-bottom-color: var(--blue-700); }
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .hero { grid-template-columns: 1fr; padding-top: 100px; }
+  .hero-visual { height: 350px; }
+  .dashboard-layout { grid-template-columns: 1fr; }
+  .dash-sidebar { display: none; }
+  .auth-page { grid-template-columns: 1fr; }
+  .auth-right { display: none; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .mission-vision { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .mobile-toggle { display: flex; }
+  .hero-stats { gap: var(--space-lg); }
+  .hero-stat strong { font-size: 1.4rem; }
+  .section { padding: var(--space-3xl) var(--space-md); }
+  .form-row { grid-template-columns: 1fr; }
+  .pricing-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; gap: var(--space-xl); }
+  .cta-banner { padding: var(--space-2xl) var(--space-lg); }
+}
+
+/* Mobile nav */
+.mobile-nav {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--white);
+  z-index: 200;
+  padding: var(--space-4xl) var(--space-xl);
+}
+
+.mobile-nav.open { display: flex; flex-direction: column; gap: var(--space-lg); }
+.mobile-nav a { font-size: 1.3rem; font-weight: 600; color: var(--neutral-800); }
+.mobile-nav-close { position: absolute; top: var(--space-lg); right: var(--space-lg); }
+
+/* Animations */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s var(--ease-out-expo), transform 0.6s var(--ease-out-expo);
+}
+
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+.stagger > * {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s var(--ease-out-expo), transform 0.5s var(--ease-out-expo);
+}
+
+.stagger.visible > * { opacity: 1; transform: translateY(0); }
+.stagger.visible > *:nth-child(1) { transition-delay: 0ms; }
+.stagger.visible > *:nth-child(2) { transition-delay: 60ms; }
+.stagger.visible > *:nth-child(3) { transition-delay: 120ms; }
+.stagger.visible > *:nth-child(4) { transition-delay: 180ms; }
+.stagger.visible > *:nth-child(5) { transition-delay: 240ms; }
+.stagger.visible > *:nth-child(6) { transition-delay: 300ms; }
+.stagger.visible > *:nth-child(7) { transition-delay: 360ms; }
+.stagger.visible > *:nth-child(8) { transition-delay: 420ms; }
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  padding: 12px 24px;
+  background: var(--neutral-900);
+  color: var(--white);
+  font-size: 0.88rem;
+  font-weight: 500;
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-xl);
+  z-index: 300;
+  transition: transform 0.4s var(--ease-out-expo);
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav" id="mainNav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo" onclick="navigate('home')">
+      <svg viewBox="0 0 36 36" fill="none">
+        <circle cx="18" cy="18" r="18" fill="oklch(35% 0.15 250)"/>
+        <path d="M10 18c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="oklch(55% 0.18 155)" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="18" cy="20" r="3" fill="white"/>
+        <path d="M15 13l-2-3M21 13l2-3M18 10V7" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      Shee Zuri
+    </a>
+    <ul class="nav-links">
+      <li><a href="#" onclick="navigate('home')" class="active" data-page="home">Home</a></li>
+      <li><a href="#" onclick="navigate('about')" data-page="about">About</a></li>
+      <li><a href="#" onclick="navigate('services')" data-page="services">Services</a></li>
+      <li><a href="#" onclick="navigate('pricing')" data-page="pricing">Pricing</a></li>
+      <li><a href="#" onclick="navigate('gallery')" data-page="gallery">Gallery</a></li>
+      <li><a href="#" onclick="navigate('contact')" data-page="contact">Contact</a></li>
+    </ul>
+    <div style="display:flex;gap:12px;align-items:center">
+      <a href="#" onclick="navigate('login')" style="font-size:0.88rem;font-weight:500;color:var(--neutral-700)">Login</a>
+      <a href="#" class="nav-cta" onclick="navigate('booking')">Book Now</a>
+    </div>
+    <button class="mobile-toggle" onclick="toggleMobileNav()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-close" onclick="toggleMobileNav()">
+    <i data-lucide="x" style="width:28px;height:28px"></i>
+  </button>
+  <a href="#" onclick="navigate('home');toggleMobileNav()">Home</a>
+  <a href="#" onclick="navigate('about');toggleMobileNav()">About</a>
+  <a href="#" onclick="navigate('services');toggleMobileNav()">Services</a>
+  <a href="#" onclick="navigate('pricing');toggleMobileNav()">Pricing</a>
+  <a href="#" onclick="navigate('gallery');toggleMobileNav()">Gallery</a>
+  <a href="#" onclick="navigate('contact');toggleMobileNav()">Contact</a>
+  <a href="#" onclick="navigate('login');toggleMobileNav()">Login</a>
+  <a href="#" onclick="navigate('booking');toggleMobileNav()" style="color:var(--green-500)">Book Now</a>
+</div>
+
+<!-- HOME PAGE -->
+<div class="page active" id="page-home">
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <i data-lucide="sparkles"></i>
+        #1 Cleaning Service in Kenya
+      </div>
+      <h1>Sparkling Spaces,<br><span>Exceptional Service</span></h1>
+      <p class="hero-desc">Professional cleaning services for homes, offices, and commercial spaces across Kenya. We bring brilliance to every corner.</p>
+      <div class="hero-actions">
+        <a href="#" class="btn btn-primary btn-lg" onclick="navigate('booking')">
+          <i data-lucide="calendar" style="width:18px;height:18px"></i>
+          Book a Cleaning
+        </a>
+        <a href="#" class="btn btn-outline btn-lg" onclick="navigate('services')">Our Services</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <strong>2,500+</strong>
+          <span>Happy Clients</span>
+        </div>
+        <div class="hero-stat">
+          <strong>4.9★</strong>
+          <span>Average Rating</span>
+        </div>
+        <div class="hero-stat">
+          <strong>5+</strong>
+          <span>Years Experience</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-img-placeholder">
+        <i data-lucide="sparkles"></i>
+        <div class="hero-float-card top-right" style="animation-delay:-2s">
+          <div class="float-card-label">Customer Rating</div>
+          <div class="float-card-stars">★★★★★</div>
+          <div class="float-card-value">4.9/5</div>
+        </div>
+        <div class="hero-float-card bottom-left">
+          <div class="float-card-label">Bookings This Month</div>
+          <div class="float-card-value">347+</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background:var(--neutral-50)">
+    <div class="container">
+      <div class="section-header fade-in">
+        <span class="eyebrow">Our Services</span>
+        <h2>Professional Cleaning Solutions</h2>
+        <p>From residential deep cleans to commercial maintenance, we deliver spotless results every time.</p>
+      </div>
+      <div class="services-grid stagger">
+        <div class="service-card">
+          <div class="service-icon"><i data-lucide="home"></i></div>
+          <h3>Residential Cleaning</h3>
+          <p>Complete home cleaning services tailored to your needs. Regular maintenance or one-time deep cleans.</p>
+          <span class="price">From KES 3,500</span>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><i data-lucide="building-2"></i></div>
+          <h3>Commercial Cleaning</h3>
+          <p>Keep your business space pristine. Flexible schedules for offices, retail, and commercial properties.</p>
+          <span class="price">From KES 8,000</span>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><i data-lucide="brush"></i></div>
+          <h3>Deep Cleaning</h3>
+          <p>Intensive cleaning that reaches every corner. Perfect for seasonal refreshes and move-ins.</p>
+          <span class="price">From KES 6,000</span>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><i data-lucide="sofa"></i></div>
+          <h3>Sofa & Carpet Cleaning</h3>
+          <p>Specialized upholstery and carpet care. Steam cleaning, stain removal, and fabric protection.</p>
+          <span class="price">From KES 2,500</span>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><i data-lucide="hard-hat"></i></div>
+          <h3>Post-Construction</h3>
+          <p>Thorough cleaning after renovations or new builds. Dust removal, surface polishing, debris clearing.</p>
+          <span class="price">From KES 12,000</span>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><i data-lucide="truck"></i></div>
+          <h3>Move-In/Move-Out</h3>
+          <p>Start fresh in your new space or leave your old one spotless. Complete turnover cleaning.</p>
+          <span class="price">From KES 5,000</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header fade-in">
+        <span class="eyebrow">Why Shee Zuri</span>
+        <h2>What Sets Us Apart</h2>
+      </div>
+      <div class="why-grid stagger">
+        <div class="why-item">
+          <div class="why-item-icon"><i data-lucide="shield-check"></i></div>
+          <h4>Vetted Professionals</h4>
+          <p>Every team member is background-checked, trained, and insured for your peace of mind.</p>
+        </div>
+        <div class="why-item">
+          <div class="why-item-icon"><i data-lucide="leaf"></i></div>
+          <h4>Eco-Friendly Products</h4>
+          <p>We use environmentally safe cleaning solutions that are tough on dirt but gentle on your surfaces.</p>
+        </div>
+        <div class="why-item">
+          <div class="why-item-icon"><i data-lucide="clock"></i></div>
+          <h4>Flexible Scheduling</h4>
+          <p>Book at your convenience. Early mornings, evenings, weekends, we work around your schedule.</p>
+        </div>
+        <div class="why-item">
+          <div class="why-item-icon"><i data-lucide="badge-check"></i></div>
+          <h4>Satisfaction Guaranteed</h4>
+          <p>Not happy? We'll re-clean at no extra charge. Your satisfaction is our top priority.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background:var(--blue-50)">
+    <div class="container">
+      <div class="section-header fade-in">
+        <span class="eyebrow">Testimonials</span>
+        <h2>What Our Clients Say</h2>
+      </div>
+      <div class="testimonials-grid stagger">
+        <div class="testimonial">
+          <p class="testimonial-text">Shee Zuri transformed our office space. The team was professional, thorough, and finished ahead of schedule. We've been using their weekly service for 6 months now.</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">AK</div>
+            <div class="testimonial-info">
+              <strong>Amina Kariuki</strong>
+              <span>Office Manager, TechHub Nairobi</span>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial">
+          <p class="testimonial-text">After our renovation, the post-construction mess seemed impossible. Shee Zuri had our home sparkling in one day. Absolutely incredible work!</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">JO</div>
+            <div class="testimonial-info">
+              <strong>James Ochieng</strong>
+              <span>Homeowner, Kilimani</span>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial">
+          <p class="testimonial-text">I use their regular home cleaning service twice a week. Reliable, trustworthy, and consistently excellent. The M-Pesa payment makes it so convenient.</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">WM</div>
+            <div class="testimonial-info">
+              <strong>Wanjiku Muthoni</strong>
+              <span>Resident, Westlands</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="cta-banner fade-in">
+        <h2>Ready for a Sparkling Space?</h2>
+        <p>Get a free quote in minutes. No obligation, no hidden fees.</p>
+        <a href="#" class="btn btn-primary btn-lg" onclick="navigate('booking')">Get Free Quote</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ABOUT PAGE -->
+<div class="page" id="page-about">
+  <div class="about-hero">
+    <span class="eyebrow">About Us</span>
+    <h1>Cleaning Spaces, Building Trust</h1>
+    <p>Since 2019, Shee Zuri has been Kenya's trusted partner for professional cleaning services, serving thousands of homes and businesses.</p>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div class="mission-vision fade-in">
+        <div class="mv-card mission">
+          <h3>Our Mission</h3>
+          <p>To deliver exceptional cleaning services that transform spaces and exceed expectations, while creating meaningful employment opportunities for Kenyans and maintaining the highest standards of professionalism and environmental responsibility.</p>
+        </div>
+        <div class="mv-card vision">
+          <h3>Our Vision</h3>
+          <p>To be East Africa's most trusted and innovative cleaning services company, recognized for reliability, excellence, and our commitment to making every space we touch a healthier, more beautiful environment.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-sm" style="background:var(--neutral-50)">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Core Values</span>
+        <h2>What Drives Us</h2>
+      </div>
+      <div class="values-grid stagger">
+        <div class="value-card">
+          <i data-lucide="award"></i>
+          <h4>Professionalism</h4>
+          <p>Every interaction reflects our commitment to excellence</p>
+        </div>
+        <div class="value-card">
+          <i data-lucide="timer"></i>
+          <h4>Reliability</h4>
+          <p>On time, every time. Your schedule is sacred to us</p>
+        </div>
+        <div class="value-card">
+          <i data-lucide="heart-handshake"></i>
+          <h4>Trust</h4>
+          <p>Background-checked teams you can welcome into your space</p>
+        </div>
+        <div class="value-card">
+          <i data-lucide="target"></i>
+          <h4>Excellence</h4>
+          <p>We don't cut corners. Every detail matters</p>
+        </div>
+        <div class="value-card">
+          <i data-lucide="smile"></i>
+          <h4>Customer First</h4>
+          <p>Your satisfaction is the measure of our success</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Our Team</span>
+        <h2>Meet the People Behind the Sparkle</h2>
+      </div>
+      <div class="team-grid stagger">
+        <div class="team-member">
+          <div class="team-avatar">SZ</div>
+          <h4>Sheila Zuri</h4>
+          <span>Founder & CEO</span>
+        </div>
+        <div class="team-member">
+          <div class="team-avatar">DK</div>
+          <h4>David Kimani</h4>
+          <span>Operations Manager</span>
+        </div>
+        <div class="team-member">
+          <div class="team-avatar">FW</div>
+          <h4>Faith Wambui</h4>
+          <span>Client Relations Lead</span>
+        </div>
+        <div class="team-member">
+          <div class="team-avatar">PO</div>
+          <h4>Peter Otieno</h4>
+          <span>Head of Training</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- SERVICES PAGE -->
+<div class="page" id="page-services">
+  <div class="about-hero">
+    <span class="eyebrow">Services</span>
+    <h1>Complete Cleaning Solutions</h1>
+    <p>Professional services for every space. Choose what suits you best, or let us build a custom package.</p>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div class="services-grid stagger">
+        <div class="service-card">
+          <div class="service-icon"><i data-lucide="home"></i></div>
+          <h3>Residential Cleaning</h3>
+          <p>Regular house cleaning, kitchen deep cleaning, bathroom sanitization, bedroom freshening, living area detailing. We handle everything from dusting to mopping.</p>
+          <span class="price">From KES 3,500</span>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><i data-lucide="building-2"></i></div>
+          <h3>Commercial Cleaning</h3>
+          <p>Retail stores, restaurants, shopping centers, and commercial buildings. Day or night scheduling available to minimize business disruption.</p>
+          <span class="price">From KES 8,000</span>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><i data-lucide="monitor"></i></div>
+          <h3>Office Cleaning</h3>
+          <p>Workstation sanitization, common area maintenance, washroom cleaning, kitchen upkeep, window cleaning, and waste management for offices of all sizes.</p>
+          <span class="price">From KES 5,000</span>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><i data-lucide="brush"></i></div>
+          <h3>Deep Cleaning</h3>
+          <p>Intensive top-to-bottom cleaning. Behind appliances, inside cabinets, light fixtures, baseboards, vents, and all those forgotten spots.</p>
+          <span class="price">From KES 6,000</span>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><i data-lucide="truck"></i></div>
+          <h3>Move-In/Move-Out Cleaning</h3>
+          <p>Start fresh in your new place or leave your old one spotless for the next tenant. Includes deep cleaning of all rooms, appliances, and fixtures.</p>
+          <span class="price">From KES 5,000</span>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><i data-lucide="hard-hat"></i></div>
+          <h3>Post-Construction Cleaning</h3>
+          <p>Dust removal, debris clearing, surface polishing, window cleaning, and final detailing after renovations or new builds.</p>
+          <span class="price">From KES 12,000</span>
+        </div>
+        <div class="service-card">
+          <div class="service-icon" style="background:var(--green-50);color:var(--green-600)"><i data-lucide="square-dashed-bottom"></i></div>
+          <h3>Carpet Cleaning</h3>
+          <p>Professional steam cleaning, stain removal, odor elimination, and fabric protection for carpets and rugs of all sizes and materials.</p>
+          <span class="price">From KES 2,000</span>
+        </div>
+        <div class="service-card">
+          <div class="service-icon" style="background:var(--green-50);color:var(--green-600)"><i data-lucide="sofa"></i></div>
+          <h3>Sofa Cleaning</h3>
+          <p>Deep cleaning for sofas, armchairs, and upholstered furniture. Steam treatment, stain removal, and optional fabric protection coating.</p>
+          <span class="price">From KES 2,500</span>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:var(--space-2xl)">
+        <a href="#" class="btn btn-primary btn-lg" onclick="navigate('booking')">Book a Service</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- PRICING PAGE -->
+<div class="page" id="page-pricing">
+  <div class="about-hero">
+    <span class="eyebrow">Pricing</span>
+    <h1>Transparent, Fair Pricing</h1>
+    <p>No hidden costs. Choose a package or request a custom quote for your specific needs.</p>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div class="pricing-grid stagger">
+        <div class="pricing-card">
+          <h3>Basic Clean</h3>
+          <div class="price-amount">KES 3,500</div>
+          <div class="price-period">per session</div>
+          <p class="price-desc">Standard cleaning for apartments and small homes up to 2 bedrooms.</p>
+          <ul class="pricing-features">
+            <li><i data-lucide="check"></i> General dusting & wiping</li>
+            <li><i data-lucide="check"></i> Floor sweeping & mopping</li>
+            <li><i data-lucide="check"></i> Bathroom cleaning</li>
+            <li><i data-lucide="check"></i> Kitchen surface cleaning</li>
+            <li><i data-lucide="check"></i> Waste removal</li>
+            <li><i data-lucide="check"></i> Basic tidying</li>
+          </ul>
+          <a href="#" class="btn btn-outline" style="width:100%;justify-content:center" onclick="navigate('booking')">Book Now</a>
+        </div>
+        <div class="pricing-card featured">
+          <h3>Premium Clean</h3>
+          <div class="price-amount">KES 6,500</div>
+          <div class="price-period">per session</div>
+          <p class="price-desc">Comprehensive deep cleaning for homes up to 4 bedrooms. Our most popular choice.</p>
+          <ul class="pricing-features">
+            <li><i data-lucide="check"></i> Everything in Basic</li>
+            <li><i data-lucide="check"></i> Deep kitchen cleaning</li>
+            <li><i data-lucide="check"></i> Inside cabinets & appliances</li>
+            <li><i data-lucide="check"></i> Window cleaning (interior)</li>
+            <li><i data-lucide="check"></i> Upholstery vacuuming</li>
+            <li><i data-lucide="check"></i> Balcony/veranda cleaning</li>
+            <li><i data-lucide="check"></i> Eco-friendly products</li>
+          </ul>
+          <a href="#" class="btn btn-primary" style="width:100%;justify-content:center" onclick="navigate('booking')">Book Now</a>
+        </div>
+        <div class="pricing-card">
+          <h3>Commercial</h3>
+          <div class="price-amount">KES 15,000</div>
+          <div class="price-period">per session</div>
+          <p class="price-desc">Full commercial cleaning for offices and business premises. Custom scheduling.</p>
+          <ul class="pricing-features">
+            <li><i data-lucide="check"></i> Full office cleaning</li>
+            <li><i data-lucide="check"></i> Workstation sanitization</li>
+            <li><i data-lucide="check"></i> Washroom deep clean</li>
+            <li><i data-lucide="check"></i> Window cleaning</li>
+            <li><i data-lucide="check"></i> Carpet vacuuming</li>
+            <li><i data-lucide="check"></i> Waste management</li>
+            <li><i data-lucide="check"></i> Flexible scheduling</li>
+            <li><i data-lucide="check"></i> Dedicated team assigned</li>
+          </ul>
+          <a href="#" class="btn btn-outline" style="width:100%;justify-content:center" onclick="navigate('booking')">Get Quote</a>
+        </div>
+      </div>
+
+      <div style="text-align:center;margin-top:var(--space-3xl);padding:var(--space-2xl);background:var(--neutral-50);border-radius:var(--radius-xl)">
+        <h3 style="margin-bottom:var(--space-sm)">Need a Custom Package?</h3>
+        <p style="color:var(--neutral-600);margin:0 auto var(--space-lg)">We create tailored cleaning plans for unique requirements. Tell us what you need.</p>
+        <a href="#" class="btn btn-secondary" onclick="navigate('contact')">Contact Us</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- GALLERY PAGE -->
+<div class="page" id="page-gallery">
+  <div class="about-hero">
+    <span class="eyebrow">Gallery</span>
+    <h1>Our Work Speaks for Itself</h1>
+    <p>Before and after transformations from real client projects across Nairobi and beyond.</p>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div class="gallery-filters">
+        <button class="gallery-filter active" onclick="filterGallery('all')">All</button>
+        <button class="gallery-filter" onclick="filterGallery('residential')">Residential</button>
+        <button class="gallery-filter" onclick="filterGallery('commercial')">Commercial</button>
+        <button class="gallery-filter" onclick="filterGallery('carpet')">Carpet & Sofa</button>
+        <button class="gallery-filter" onclick="filterGallery('construction')">Post-Construction</button>
+      </div>
+      <div class="gallery-grid stagger" id="galleryGrid">
+        <div class="gallery-item" data-category="residential">
+          <div class="gallery-item-img" style="background:linear-gradient(135deg, oklch(90% 0.03 155), oklch(95% 0.02 250))"></div>
+          <div class="gallery-item-overlay"><span>Kitchen Deep Clean</span></div>
+          <div class="gallery-badge">Before & After</div>
+        </div>
+        <div class="gallery-item" data-category="commercial">
+          <div class="gallery-item-img" style="background:linear-gradient(135deg, oklch(88% 0.04 250), oklch(93% 0.02 200))"></div>
+          <div class="gallery-item-overlay"><span>Office Transformation</span></div>
+          <div class="gallery-badge">Commercial</div>
+        </div>
+        <div class="gallery-item" data-category="residential">
+          <div class="gallery-item-img" style="background:linear-gradient(135deg, oklch(92% 0.02 80), oklch(96% 0.01 155))"></div>
+          <div class="gallery-item-overlay"><span>Bathroom Refresh</span></div>
+          <div class="gallery-badge">Before & After</div>
+        </div>
+        <div class="gallery-item" data-category="carpet">
+          <div class="gallery-item-img" style="background:linear-gradient(135deg, oklch(85% 0.05 30), oklch(94% 0.02 60))"></div>
+          <div class="gallery-item-overlay"><span>Carpet Restoration</span></div>
+          <div class="gallery-badge">Carpet</div>
+        </div>
+        <div class="gallery-item" data-category="construction">
+          <div class="gallery-item-img" style="background:linear-gradient(135deg, oklch(87% 0.03 200), oklch(94% 0.02 250))"></div>
+          <div class="gallery-item-overlay"><span>Post-Build Cleanup</span></div>
+          <div class="gallery-badge">Construction</div>
+        </div>
+        <div class="gallery-item" data-category="carpet">
+          <div class="gallery-item-img" style="background:linear-gradient(135deg, oklch(89% 0.04 155), oklch(95% 0.01 200))"></div>
+          <div class="gallery-item-overlay"><span>Sofa Steam Clean</span></div>
+          <div class="gallery-badge">Upholstery</div>
+        </div>
+        <div class="gallery-item" data-category="commercial">
+          <div class="gallery-item-img" style="background:linear-gradient(135deg, oklch(86% 0.04 250), oklch(93% 0.02 155))"></div>
+          <div class="gallery-item-overlay"><span>Restaurant Kitchen</span></div>
+          <div class="gallery-badge">Commercial</div>
+        </div>
+        <div class="gallery-item" data-category="residential">
+          <div class="gallery-item-img" style="background:linear-gradient(135deg, oklch(91% 0.03 100), oklch(96% 0.01 155))"></div>
+          <div class="gallery-item-overlay"><span>Living Room Makeover</span></div>
+          <div class="gallery-badge">Before & After</div>
+        </div>
+        <div class="gallery-item" data-category="construction">
+          <div class="gallery-item-img" style="background:linear-gradient(135deg, oklch(84% 0.05 250), oklch(92% 0.02 200))"></div>
+          <div class="gallery-item-overlay"><span>New Build Final Clean</span></div>
+          <div class="gallery-badge">Construction</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- CONTACT PAGE -->
+<div class="page" id="page-contact">
+  <div class="about-hero">
+    <span class="eyebrow">Contact</span>
+    <h1>Let's Talk Clean</h1>
+    <p>Reach out for quotes, questions, or to schedule your first cleaning session.</p>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div class="contact-grid">
+        <div>
+          <h3 style="margin-bottom:var(--space-xl)">Get in Touch</h3>
+          <div class="contact-info-item">
+            <div class="contact-info-icon"><i data-lucide="map-pin"></i></div>
+            <div>
+              <h4>Location</h4>
+              <p>Nairobi, Kenya</p>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-info-icon"><i data-lucide="phone"></i></div>
+            <div>
+              <h4>Phone</h4>
+              <p>+254 793 850 115<br>+254 783 574 693</p>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-info-icon"><i data-lucide="mail"></i></div>
+            <div>
+              <h4>Email</h4>
+              <p>sheilahmoyi4@gmail.com</p>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-info-icon"><i data-lucide="message-circle"></i></div>
+            <div>
+              <h4>WhatsApp</h4>
+              <p><a href="https://wa.me/254783574693" target="_blank" style="color:var(--green-600);font-weight:500">+254 783 574 693</a></p>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-info-icon"><i data-lucide="clock"></i></div>
+            <div>
+              <h4>Working Hours</h4>
+              <p>Mon - Fri: 7:00 AM - 7:00 PM<br>Sat: 8:00 AM - 5:00 PM<br>Sun: Closed</p>
+            </div>
+          </div>
+          <div class="map-placeholder">
+            <i data-lucide="map" style="width:24px;height:24px;margin-right:8px"></i>
+            Google Maps integration area
+          </div>
+        </div>
+        <div>
+          <h3 style="margin-bottom:var(--space-xl)">Send Us a Message</h3>
+          <form onsubmit="handleContactSubmit(event)">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">First Name</label>
+                <input type="text" class="form-input" placeholder="John" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Last Name</label>
+                <input type="text" class="form-input" placeholder="Doe" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email Address</label>
+              <input type="email" class="form-input" placeholder="john@example.com" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phone Number</label>
+              <input type="tel" class="form-input" placeholder="+254 7XX XXX XXX" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Service Interested In</label>
+              <select class="form-select">
+                <option>Select a service</option>
+                <option>Residential Cleaning</option>
+                <option>Commercial Cleaning</option>
+                <option>Office Cleaning</option>
+                <option>Deep Cleaning</option>
+                <option>Move-In/Move-Out</option>
+                <option>Post-Construction</option>
+                <option>Carpet Cleaning</option>
+                <option>Sofa Cleaning</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Message</label>
+              <textarea class="form-textarea" placeholder="Tell us about your cleaning needs..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- BOOKING PAGE -->
+<div class="page" id="page-booking">
+  <div class="about-hero">
+    <span class="eyebrow">Book Now</span>
+    <h1>Schedule Your Cleaning</h1>
+    <p>Fill in the details below and we'll confirm your booking within the hour.</p>
+  </div>
+
+  <section class="section">
+    <div class="container-sm">
+      <div class="booking-form">
+        <div class="booking-steps">
+          <div class="booking-step active" id="step1-ind">
+            <span class="booking-step-num">1</span> Service
+          </div>
+          <div class="booking-step" id="step2-ind">
+            <span class="booking-step-num">2</span> Details
+          </div>
+          <div class="booking-step" id="step3-ind">
+            <span class="booking-step-num">3</span> Payment
+          </div>
+        </div>
+
+        <form onsubmit="handleBookingSubmit(event)" id="bookingForm">
+          <div id="booking-step-1">
+            <div class="form-group">
+              <label class="form-label">Select Service</label>
+              <select class="form-select" required>
+                <option value="">Choose a service...</option>
+                <option value="residential">Residential Cleaning - From KES 3,500</option>
+                <option value="commercial">Commercial Cleaning - From KES 8,000</option>
+                <option value="office">Office Cleaning - From KES 5,000</option>
+                <option value="deep">Deep Cleaning - From KES 6,000</option>
+                <option value="movein">Move-In/Move-Out - From KES 5,000</option>
+                <option value="construction">Post-Construction - From KES 12,000</option>
+                <option value="carpet">Carpet Cleaning - From KES 2,000</option>
+                <option value="sofa">Sofa Cleaning - From KES 2,500</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Preferred Date</label>
+                <input type="date" class="form-input" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Preferred Time</label>
+                <select class="form-select" required>
+                  <option value="">Select time...</option>
+                  <option>7:00 AM</option>
+                  <option>8:00 AM</option>
+                  <option>9:00 AM</option>
+                  <option>10:00 AM</option>
+                  <option>11:00 AM</option>
+                  <option>12:00 PM</option>
+                  <option>1:00 PM</option>
+                  <option>2:00 PM</option>
+                  <option>3:00 PM</option>
+                  <option>4:00 PM</option>
+                  <option>5:00 PM</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Property Size</label>
+              <select class="form-select">
+                <option>Studio / Bedsitter</option>
+                <option>1 Bedroom</option>
+                <option>2 Bedrooms</option>
+                <option>3 Bedrooms</option>
+                <option>4+ Bedrooms</option>
+                <option>Office (Small)</option>
+                <option>Office (Medium)</option>
+                <option>Office (Large)</option>
+                <option>Commercial Space</option>
+              </select>
+            </div>
+            <button type="button" class="btn btn-primary" style="width:100%;justify-content:center" onclick="nextBookingStep(2)">Continue</button>
+          </div>
+
+          <div id="booking-step-2" style="display:none">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Full Name</label>
+                <input type="text" class="form-input" placeholder="Your full name" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Phone Number</label>
+                <input type="tel" class="form-input" placeholder="+254 7XX XXX XXX" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email Address</label>
+              <input type="email" class="form-input" placeholder="your@email.com" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Location / Address</label>
+              <input type="text" class="form-input" placeholder="Estate, Building, Floor (e.g. Kilimani, Woodvale Court, 3rd Floor)" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Special Instructions</label>
+              <textarea class="form-textarea" placeholder="Any special requirements, access instructions, or areas of focus..."></textarea>
+            </div>
+            <div style="display:flex;gap:var(--space-md)">
+              <button type="button" class="btn btn-outline" style="flex:1;justify-content:center" onclick="nextBookingStep(1)">Back</button>
+              <button type="button" class="btn btn-primary" style="flex:2;justify-content:center" onclick="nextBookingStep(3)">Continue to Payment</button>
+            </div>
+          </div>
+
+          <div id="booking-step-3" style="display:none">
+            <div style="text-align:center;padding:var(--space-xl) 0">
+              <div style="width:64px;height:64px;margin:0 auto var(--space-md);background:var(--green-100);border-radius:50%;display:flex;align-items:center;justify-content:center">
+                <i data-lucide="smartphone" style="width:28px;height:28px;color:var(--green-600)"></i>
+              </div>
+              <h3>Pay via M-Pesa</h3>
+              <p style="color:var(--neutral-600);margin:var(--space-md) auto">Enter your M-Pesa phone number to receive the STK push payment prompt.</p>
+            </div>
+            <div class="form-group">
+              <label class="form-label">M-Pesa Phone Number</label>
+              <input type="tel" class="form-input" placeholder="0712 345 678" required>
+            </div>
+            <div style="padding:var(--space-md);background:var(--neutral-50);border-radius:var(--radius-md);margin-bottom:var(--space-lg)">
+              <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+                <span style="font-size:0.88rem;color:var(--neutral-600)">Service Total</span>
+                <strong>KES 6,500</strong>
+              </div>
+              <div style="display:flex;justify-content:space-between">
+                <span style="font-size:0.88rem;color:var(--neutral-600)">Booking Fee</span>
+                <strong>KES 500</strong>
+              </div>
+              <div style="border-top:1px solid var(--neutral-200);margin-top:8px;padding-top:8px;display:flex;justify-content:space-between">
+                <span style="font-weight:700">Total Due Now</span>
+                <strong style="color:var(--green-600)">KES 7,000</strong>
+              </div>
+            </div>
+            <div style="display:flex;gap:var(--space-md)">
+              <button type="button" class="btn btn-outline" style="flex:1;justify-content:center" onclick="nextBookingStep(2)">Back</button>
+              <button type="submit" class="btn btn-primary" style="flex:2;justify-content:center">
+                <i data-lucide="lock" style="width:16px;height:16px"></i>
+                Pay KES 7,000
+              </button>
+            </div>
+            <p style="text-align:center;font-size:0.8rem;color:var(--neutral-500);margin-top:var(--space-md)">Secured by Safaricom M-Pesa. You'll receive an STK push on your phone.</p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- LOGIN PAGE -->
+<div class="page" id="page-login">
+  <div class="auth-page">
+    <div class="auth-left">
+      <div class="auth-form">
+        <a href="#" class="nav-logo" onclick="navigate('home')" style="margin-bottom:var(--space-2xl)">
+          <svg viewBox="0 0 36 36" fill="none" style="width:32px;height:32px">
+            <circle cx="18" cy="18" r="18" fill="oklch(35% 0.15 250)"/>
+            <path d="M10 18c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="oklch(55% 0.18 155)" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="18" cy="20" r="3" fill="white"/>
+          </svg>
+          Shee Zuri
+        </a>
+        <h2>Welcome Back</h2>
+        <p class="subtitle">Sign in to manage your bookings and account.</p>
+        <form onsubmit="handleLogin(event)">
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input type="email" class="form-input" placeholder="you@example.com" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <input type="password" class="form-input" placeholder="••••••••" required>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-lg)">
+            <label style="font-size:0.85rem;display:flex;align-items:center;gap:6px;cursor:pointer">
+              <input type="checkbox" style="width:16px;height:16px"> Remember me
+            </label>
+            <span class="auth-link" style="font-size:0.85rem">Forgot password?</span>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">Sign In</button>
+        </form>
+        <div class="auth-divider">or</div>
+        <p style="text-align:center;font-size:0.9rem">Don't have an account? <span class="auth-link" onclick="navigate('register')">Create one</span></p>
+      </div>
+    </div>
+    <div class="auth-right">
+      <div class="auth-right-content">
+        <i data-lucide="sparkles" style="width:48px;height:48px;margin-bottom:var(--space-lg);opacity:0.8"></i>
+        <h2>Manage Your Bookings</h2>
+        <p>Track your cleaning schedule, view payment history, and manage your preferences all in one place.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REGISTER PAGE -->
+<div class="page" id="page-register">
+  <div class="auth-page">
+    <div class="auth-left">
+      <div class="auth-form">
+        <a href="#" class="nav-logo" onclick="navigate('home')" style="margin-bottom:var(--space-2xl)">
+          <svg viewBox="0 0 36 36" fill="none" style="width:32px;height:32px">
+            <circle cx="18" cy="18" r="18" fill="oklch(35% 0.15 250)"/>
+            <path d="M10 18c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="oklch(55% 0.18 155)" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="18" cy="20" r="3" fill="white"/>
+          </svg>
+          Shee Zuri
+        </a>
+        <h2>Create Account</h2>
+        <p class="subtitle">Join thousands of happy Shee Zuri customers.</p>
+        <form onsubmit="handleRegister(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">First Name</label>
+              <input type="text" class="form-input" placeholder="John" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Last Name</label>
+              <input type="text" class="form-input" placeholder="Doe" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input type="email" class="form-input" placeholder="you@example.com" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone Number</label>
+            <input type="tel" class="form-input" placeholder="+254 7XX XXX XXX" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <input type="password" class="form-input" placeholder="At least 8 characters" required>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">Create Account</button>
+        </form>
+        <div class="auth-divider">or</div>
+        <p style="text-align:center;font-size:0.9rem">Already have an account? <span class="auth-link" onclick="navigate('login')">Sign in</span></p>
+      </div>
+    </div>
+    <div class="auth-right">
+      <div class="auth-right-content">
+        <i data-lucide="user-plus" style="width:48px;height:48px;margin-bottom:var(--space-lg);opacity:0.8"></i>
+        <h2>Join Shee Zuri</h2>
+        <p>Create your account to book services, track your cleaning schedule, and earn loyalty rewards.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CUSTOMER DASHBOARD -->
+<div class="page" id="page-dashboard">
+  <div class="dashboard-layout">
+    <aside class="dash-sidebar">
+      <div style="padding:0 var(--space-md) var(--space-lg);font-weight:700;color:var(--blue-700)">My Account</div>
+      <ul class="dash-nav">
+        <li><a href="#" class="active" onclick="switchDashTab('overview')"><i data-lucide="layout-dashboard"></i> Overview</a></li>
+        <li><a href="#" onclick="switchDashTab('bookings')"><i data-lucide="calendar"></i> My Bookings</a></li>
+        <li><a href="#" onclick="switchDashTab('payments')"><i data-lucide="credit-card"></i> Payments</a></li>
+        <li><a href="#" onclick="switchDashTab('profile')"><i data-lucide="user"></i> Profile</a></li>
+        <li><a href="#" onclick="navigate('home')"><i data-lucide="log-out"></i> Logout</a></li>
+      </ul>
+    </aside>
+    <main class="dash-content">
+      <div class="dash-header">
+        <h2>Welcome back, Sheilah</h2>
+        <a href="#" class="btn btn-primary btn-sm" onclick="navigate('booking')">
+          <i data-lucide="plus" style="width:16px;height:16px"></i> New Booking
+        </a>
+      </div>
+      <div class="dash-stats">
+        <div class="dash-stat">
+          <div class="dash-stat-label">Total Bookings</div>
+          <div class="dash-stat-value">12</div>
+          <div class="dash-stat-change">+2 this month</div>
+        </div>
+        <div class="dash-stat">
+          <div class="dash-stat-label">Upcoming</div>
+          <div class="dash-stat-value">2</div>
+        </div>
+        <div class="dash-stat">
+          <div class="dash-stat-label">Total Spent</div>
+          <div class="dash-stat-value" style="font-feature-settings:'tnum'">KES 78,500</div>
+        </div>
+        <div class="dash-stat">
+          <div class="dash-stat-label">Loyalty Points</div>
+          <div class="dash-stat-value">450</div>
+          <div class="dash-stat-change">Silver Member</div>
+        </div>
+      </div>
+
+      <h3 style="margin-bottom:var(--space-md)">Recent Bookings</h3>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Booking ID</th>
+              <th>Service</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="font-feature-settings:'tnum'">#SZ-2026-0089</td>
+              <td>Premium Clean</td>
+              <td>Jun 25, 2026</td>
+              <td><span class="status-badge confirmed">Confirmed</span></td>
+              <td style="font-feature-settings:'tnum'">KES 6,500</td>
+            </tr>
+            <tr>
+              <td style="font-feature-settings:'tnum'">#SZ-2026-0085</td>
+              <td>Carpet Cleaning</td>
+              <td>Jun 28, 2026</td>
+              <td><span class="status-badge pending">Pending</span></td>
+              <td style="font-feature-settings:'tnum'">KES 4,000</td>
+            </tr>
+            <tr>
+              <td style="font-feature-settings:'tnum'">#SZ-2026-0072</td>
+              <td>Deep Cleaning</td>
+              <td>Jun 15, 2026</td>
+              <td><span class="status-badge completed">Completed</span></td>
+              <td style="font-feature-settings:'tnum'">KES 8,000</td>
+            </tr>
+            <tr>
+              <td style="font-feature-settings:'tnum'">#SZ-2026-0068</td>
+              <td>Residential Cleaning</td>
+              <td>Jun 8, 2026</td>
+              <td><span class="status-badge completed">Completed</span></td>
+              <td style="font-feature-settings:'tnum'">KES 3,500</td>
+            </tr>
+            <tr>
+              <td style="font-feature-settings:'tnum'">#SZ-2026-0051</td>
+              <td>Sofa Cleaning</td>
+              <td>May 28, 2026</td>
+              <td><span class="status-badge completed">Completed</span></td>
+              <td style="font-feature-settings:'tnum'">KES 3,000</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ADMIN DASHBOARD -->
+<div class="page" id="page-admin">
+  <div class="dashboard-layout">
+    <aside class="dash-sidebar">
+      <div style="padding:0 var(--space-md) var(--space-lg);font-weight:700;color:var(--blue-700)">Admin Panel</div>
+      <ul class="dash-nav">
+        <li><a href="#" class="active"><i data-lucide="layout-dashboard"></i> Dashboard</a></li>
+        <li><a href="#"><i data-lucide="calendar-check"></i> Bookings</a></li>
+        <li><a href="#"><i data-lucide="users"></i> Customers</a></li>
+        <li><a href="#"><i data-lucide="user-check"></i> Staff</a></li>
+        <li><a href="#"><i data-lucide="wrench"></i> Services</a></li>
+        <li><a href="#"><i data-lucide="credit-card"></i> Payments</a></li>
+        <li><a href="#"><i data-lucide="star"></i> Reviews</a></li>
+        <li><a href="#"><i data-lucide="bar-chart-3"></i> Reports</a></li>
+        <li><a href="#"><i data-lucide="settings"></i> Settings</a></li>
+      </ul>
+    </aside>
+    <main class="dash-content">
+      <div class="admin-header">
+        <h2>Admin Dashboard</h2>
+        <div class="admin-actions">
+          <button class="btn btn-outline btn-sm"><i data-lucide="download" style="width:14px;height:14px"></i> Export</button>
+          <button class="btn btn-primary btn-sm"><i data-lucide="plus" style="width:14px;height:14px"></i> New Booking</button>
+        </div>
+      </div>
+
+      <div class="dash-stats">
+        <div class="dash-stat">
+          <div class="dash-stat-label">Today's Bookings</div>
+          <div class="dash-stat-value">8</div>
+          <div class="dash-stat-change">+3 from yesterday</div>
+        </div>
+        <div class="dash-stat">
+          <div class="dash-stat-label">This Week Revenue</div>
+          <div class="dash-stat-value" style="font-feature-settings:'tnum'">KES 142,500</div>
+          <div class="dash-stat-change">+12% from last week</div>
+        </div>
+        <div class="dash-stat">
+          <div class="dash-stat-label">Active Staff</div>
+          <div class="dash-stat-value">14</div>
+        </div>
+        <div class="dash-stat">
+          <div class="dash-stat-label">Pending Approval</div>
+          <div class="dash-stat-value" style="color:var(--amber-500)">5</div>
+        </div>
+      </div>
+
+      <div class="tab-nav">
+        <button class="tab-btn active">All Bookings</button>
+        <button class="tab-btn">Pending</button>
+        <button class="tab-btn">Confirmed</button>
+        <button class="tab-btn">In Progress</button>
+        <button class="tab-btn">Completed</button>
+        <button class="tab-btn">Cancelled</button>
+      </div>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Customer</th>
+              <th>Service</th>
+              <th>Date</th>
+              <th>Staff</th>
+              <th>Status</th>
+              <th>Amount</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="font-feature-settings:'tnum'">#SZ-0089</td>
+              <td>Amina Kariuki</td>
+              <td>Premium Clean</td>
+              <td>Jun 25</td>
+              <td>Team A</td>
+              <td><span class="status-badge confirmed">Confirmed</span></td>
+              <td style="font-feature-settings:'tnum'">KES 6,500</td>
+              <td><button class="btn btn-sm btn-outline" style="padding:6px 12px;font-size:0.75rem">Manage</button></td>
+            </tr>
+            <tr>
+              <td style="font-feature-settings:'tnum'">#SZ-0090</td>
+              <td>James Ochieng</td>
+              <td>Post-Construction</td>
+              <td>Jun 25</td>
+              <td>Unassigned</td>
+              <td><span class="status-badge pending">Pending</span></td>
+              <td style="font-feature-settings:'tnum'">KES 18,000</td>
+              <td><button class="btn btn-sm btn-outline" style="padding:6px 12px;font-size:0.75rem">Manage</button></td>
+            </tr>
+            <tr>
+              <td style="font-feature-settings:'tnum'">#SZ-0091</td>
+              <td>Wanjiku Muthoni</td>
+              <td>Residential</td>
+              <td>Jun 26</td>
+              <td>Mary K.</td>
+              <td><span class="status-badge confirmed">Confirmed</span></td>
+              <td style="font-feature-settings:'tnum'">KES 3,500</td>
+              <td><button class="btn btn-sm btn-outline" style="padding:6px 12px;font-size:0.75rem">Manage</button></td>
+            </tr>
+            <tr>
+              <td style="font-feature-settings:'tnum'">#SZ-0092</td>
+              <td>David Njoroge</td>
+              <td>Office Cleaning</td>
+              <td>Jun 26</td>
+              <td>Team B</td>
+              <td><span class="status-badge pending">Pending</span></td>
+              <td style="font-feature-settings:'tnum'">KES 12,000</td>
+              <td><button class="btn btn-sm btn-outline" style="padding:6px 12px;font-size:0.75rem">Manage</button></td>
+            </tr>
+            <tr>
+              <td style="font-feature-settings:'tnum'">#SZ-0093</td>
+              <td>Grace Akinyi</td>
+              <td>Carpet Cleaning</td>
+              <td>Jun 27</td>
+              <td>Peter O.</td>
+              <td><span class="status-badge pending">Pending</span></td>
+              <td style="font-feature-settings:'tnum'">KES 4,500</td>
+              <td><button class="btn btn-sm btn-outline" style="padding:6px 12px;font-size:0.75rem">Manage</button></td>
+            </tr>
+            <tr>
+              <td style="font-feature-settings:'tnum'">#SZ-0087</td>
+              <td>Samuel Kipchoge</td>
+              <td>Deep Cleaning</td>
+              <td>Jun 22</td>
+              <td>Team A</td>
+              <td><span class="status-badge completed">Completed</span></td>
+              <td style="font-feature-settings:'tnum'">KES 8,000</td>
+              <td><button class="btn btn-sm btn-outline" style="padding:6px 12px;font-size:0.75rem">View</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer" id="mainFooter">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="#" class="nav-logo" onclick="navigate('home')" style="color:var(--white)">
+        <svg viewBox="0 0 36 36" fill="none" style="width:32px;height:32px">
+          <circle cx="18" cy="18" r="18" fill="oklch(45% 0.13 250)"/>
+          <path d="M10 18c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="oklch(55% 0.18 155)" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="18" cy="20" r="3" fill="white"/>
+        </svg>
+        Shee Zuri
+      </a>
+      <p>Professional cleaning services across Kenya. Sparkling spaces, exceptional service, and complete peace of mind for every client.</p>
+    </div>
+    <div>
+      <h4>Services</h4>
+      <ul class="footer-links">
+        <li><a href="#" onclick="navigate('services')">Residential</a></li>
+        <li><a href="#" onclick="navigate('services')">Commercial</a></li>
+        <li><a href="#" onclick="navigate('services')">Deep Cleaning</a></li>
+        <li><a href="#" onclick="navigate('services')">Post-Construction</a></li>
+        <li><a href="#" onclick="navigate('services')">Carpet & Sofa</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Company</h4>
+      <ul class="footer-links">
+        <li><a href="#" onclick="navigate('about')">About Us</a></li>
+        <li><a href="#" onclick="navigate('gallery')">Gallery</a></li>
+        <li><a href="#" onclick="navigate('pricing')">Pricing</a></li>
+        <li><a href="#" onclick="navigate('contact')">Contact</a></li>
+        <li><a href="#">Careers</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Connect</h4>
+      <ul class="footer-links">
+        <li><a href="https://wa.me/254783574693" target="_blank">WhatsApp</a></li>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">Facebook</a></li>
+        <li><a href="#">Twitter</a></li>
+        <li><a href="mailto:sheilahmoyi4@gmail.com">Email Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    &copy; 2026 Shee Zuri Cleaning Services. All rights reserved. | Nairobi, Kenya
+  </div>
+</footer>
+
+<!-- WhatsApp Button -->
+<a href="https://wa.me/254783574693" class="whatsapp-btn" target="_blank" title="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  if (typeof lucide !== 'undefined') lucide.createIcons();
+  initScrollAnimations();
+  if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("/service-worker.js")
+    .then(() => console.log("Service Worker Registered"));
+}
+});
+
+function navigate(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const target = document.getElementById('page-' + page);
+  if (target) {
+    target.classList.add('active');
+    window.scrollTo(0, 0);
+  }
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.classList.toggle('active', a.dataset.page === page);
+  });
+  const hideFooterPages = ['login', 'register', 'dashboard', 'admin'];
+  document.getElementById('mainFooter').style.display = hideFooterPages.includes(page) ? 'none' : 'block';
+  const hideNavPages = ['login', 'register'];
+  document.getElementById('mainNav').style.display = hideNavPages.includes(page) ? 'none' : '';
+  setTimeout(initScrollAnimations, 100);
+  if (typeof lucide !== 'undefined') lucide.createIcons();
+}
+
+window.addEventListener('scroll', () => {
+  document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 20);
+});
+
+function toggleMobileNav() {
+  document.getElementById('mobileNav').classList.toggle('open');
+}
+
+function initScrollAnimations() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in, .stagger').forEach(el => observer.observe(el));
+}
+
+function filterGallery(category) {
+  document.querySelectorAll('.gallery-filter').forEach(f => f.classList.remove('active'));
+  event.target.classList.add('active');
+  document.querySelectorAll('.gallery-item').forEach(item => {
+    item.style.display = (category === 'all' || item.dataset.category === category) ? '' : 'none';
+  });
+}
+
+function nextBookingStep(step) {
+  document.querySelectorAll('[id^="booking-step-"]').forEach(s => s.style.display = 'none');
+  document.getElementById('booking-step-' + step).style.display = '';
+  document.querySelectorAll('.booking-step').forEach((s, i) => {
+    s.classList.toggle('active', i < step);
+  });
+}
+
+function handleContactSubmit(e) {
+  e.preventDefault();
+  showToast('Message sent! We\'ll get back to you within 2 hours.');
+  e.target.reset();
+}
+
+function handleBookingSubmit(e) {
+  e.preventDefault();
+  showToast('Payment initiated! Check your phone for the M-Pesa prompt.');
+  setTimeout(() => navigate('dashboard'), 2000);
+}
+
+function handleLogin(e) {
+  e.preventDefault();
+  showToast('Welcome back, Sheilah!');
+  setTimeout(() => navigate('dashboard'), 800);
+}
+
+function handleRegister(e) {
+  e.preventDefault();
+  showToast('Account created successfully! Welcome to Shee Zuri.');
+  setTimeout(() => navigate('dashboard'), 800);
+}
+
+function switchDashTab(tab) {
+  document.querySelectorAll('.dash-nav a').forEach(a => a.classList.remove('active'));
+  event.target.closest('a').classList.add('active');
+}
+
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  toast.textContent = message;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3500);
+}
+</script>
+</body>
+</html>
